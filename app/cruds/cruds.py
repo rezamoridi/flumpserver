@@ -49,9 +49,13 @@ def Create_User(user: schemas.UserCreate, db: Session):
 def Login_user(user: schemas.UserLogin, db: Session):
     user_db = db.query(UserModels.User).filter(UserModels.User.email == user.email).first()
 
+    
+    if user_db == None :
+        raise HTTPException(status_code=404, detail=f"Login Failed, User With {user.email} and Password not found")
+        
     check_hash_pw = bcrypt.checkpw(user.password.encode(), user_db.password)
 
-    if not user_db or not check_hash_pw:
+    if not check_hash_pw:
         raise HTTPException(status_code=404, detail=f"Login Failed, User With {user.email} and Password not found")
     
     token = jwt.encode(payload={"id": user_db.id}, key=PASSWORD_KEY)

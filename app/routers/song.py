@@ -3,7 +3,7 @@ from fastapi import APIRouter, UploadFile, File, Form, Depends
 from middleware.auth_middleware import auth_middleware
 from db import Session, get_db
 from models.song import Song
-from botocore.exceptions import NoCredentialsError
+"""from botocore.exceptions import NoCredentialsError"""
 from urllib.parse import quote
 import uuid
 import os
