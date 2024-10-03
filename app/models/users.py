@@ -1,12 +1,13 @@
+from sqlalchemy import TEXT, VARCHAR, Column, LargeBinary
 from db import Base
-from sqlalchemy import Column, String, Integer, LargeBinary
+from sqlalchemy.orm import relationship
 
 class User(Base):
-    __tablename__ = "users"
+    __tablename__ = 'users'
 
-    id = Column(String, primary_key=True)
-    name = Column(String)
-    email = Column(String, unique=True)
+    id = Column(TEXT, primary_key=True)
+    name = Column(VARCHAR(100))
+    email = Column(VARCHAR(100))
     password = Column(LargeBinary)
 
-
+    favorites = relationship('Favorite', back_populates='user')

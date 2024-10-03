@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 
@@ -22,3 +22,18 @@ class User(UserCreate):
 class RespLogin(BaseModel):
     token:str
     user: User
+
+
+class BaseSong(BaseModel):
+    song_name: str
+    artist: str
+    hex_code: str
+
+class Song(BaseSong):
+    song_url: str = Field(description="Url")
+    thumbnail_url: str = Field(description="Url")
+
+
+class FavoriteSong(BaseModel):
+    song_id: str
+

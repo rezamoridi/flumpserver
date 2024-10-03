@@ -59,10 +59,3 @@ def upload_movie(video:UploadFile = File(...),
     db.refresh(new_video)
     return new_video
 
-
-@router.get('/list')
-def list_songs(db: Session=Depends(get_db) 
-               #,auth_details=Depends(auth_middleware)
-                ):
-    videos = db.query(Video).all()
-    return videos
