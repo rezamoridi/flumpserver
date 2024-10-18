@@ -1,5 +1,7 @@
 from pydantic import BaseModel, Field
-
+from typing import Optional
+from fastapi import UploadFile, Form, File
+import datetime
 
 
 class UserLogin(BaseModel):
@@ -24,16 +26,68 @@ class RespLogin(BaseModel):
     user: User
 
 
+
+""" --------------------------------------- Song Section ------------------------------------------"""
+
+
 class BaseSong(BaseModel):
-    song_name: str
-    artist: str
-    hex_code: str
+    title: str
+    duration: datetime.time
+    released_date: datetime.date
+    genres: list[str]
 
-class Song(BaseSong):
-    song_url: str = Field(description="Url")
-    thumbnail_url: str = Field(description="Url")
+class CreateSong(BaseSong):
+    id: int
+    song_url: str
+    thumbnail_url: str
+    created_at: datetime.datetime
 
 
-class FavoriteSong(BaseModel):
-    song_id: str
+
+class UpdateSong(CreateSong):
+    modified_at: Optional[datetime.datetime] = None
+
+
+class DeleteSong(UpdateSong):
+    deleted_at: Optional[datetime.datetime] = None
+
+
+class Song(DeleteSong):
+    pass
+
+
+
+
+""" --------------------------------------- Artist Section ------------------------------------------"""
+
+
+
+
+class BaseArtist(BaseModel):
+    artistic_name: str
+    name: str
+    bio: str
+
+class CreateArtist(BaseArtist):
+    id: int
+    avatar_url: str
+    created_at: datetime.datetime
+
+class UpdateArtist(CreateArtist):
+    modified_at: Optional[datetime.datetime] = None
+
+class Artist(UpdateArtist):
+    deleted_at: Optional[datetime.datetime] = None
+
+
+""" --------------------------------------- Genre Section ------------------------------------------"""
+
+
+
+class BaseGenre(BaseModel):
+    name: str
+
+class Genre(BaseGenre):
+    id: int
+
 

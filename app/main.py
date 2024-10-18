@@ -12,7 +12,6 @@ import frontRouters.front
 
 from db import Base, engine
 
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -27,6 +26,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+Base.metadata.create_all(bind=engine)
 
 app.include_router(routers.auth.router, tags=["Users"])
 app.include_router(routers.song.router, tags=["Songs"])
